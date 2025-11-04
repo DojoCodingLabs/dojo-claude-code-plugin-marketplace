@@ -1,7 +1,7 @@
 # Claude Code Waypoint
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](CHANGELOG.md)
 
 **Never lose context again.** Strategic waypoints for persistent memory and intentional context management in Claude Code projects.
 
@@ -295,6 +295,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <strong>Built by developers, for developers.</strong><br>
+  <strong>Built by Dojo Coding, for Builders.</strong><br>
   Production-tested tools for serious Claude Code users.
 </p>

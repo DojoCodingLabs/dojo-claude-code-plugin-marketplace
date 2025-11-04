@@ -1,9 +1,60 @@
 # Changelog
 
-All notable changes to this Claude Code Waypoint Plugin will be documented in this file.
+All notable changes to Claude Code Waypoint will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.0] - 2025-11-04
+
+### BREAKING CHANGES
+
+**Repository Migration: Marketplace → Single-Purpose Tool**
+
+This release represents a complete restructuring from a marketplace approach to a focused, single-purpose tool.
+
+### Changed
+- **Repository name**: `dojo-claude-code-plugin-marketplace` → `claude-code-waypoint`
+- **Repository URL**: https://github.com/DojoCodingLabs/claude-code-waypoint
+- **Structure**: Flattened `plugins/waypoint/*` → root directory
+- **Installation**: Changed from plugin marketplace to simple copy/paste
+- **Branding**: "Dojo Claude Plugins marketplace" → "Claude Code Waypoint"
+- **README**: Completely rewritten with single-purpose focus
+- **All documentation**: Updated with new repository name and structure
+
+### Removed
+- `.claude-plugin/marketplace.json` - No longer a marketplace
+- `plugins/` directory structure - Flattened to root
+- `examples/` and `scripts/` directories - Unused
+- Plugin marketplace installation method - Simplified to copy/paste
+
+### Migration Guide: v1.x → v2.0
+
+**Old Installation (v1.x):**
+```bash
+/plugin marketplace add DojoCodingLabs/dojo-claude-code-plugin-marketplace
+/plugin install waypoint@dojo-claude-code-plugin-marketplace
+```
+
+**New Installation (v2.0):**
+```bash
+git clone https://github.com/DojoCodingLabs/claude-code-waypoint
+cp -r claude-code-waypoint/.claude /your/project/
+cp -r claude-code-waypoint/plans /your/project/
+cd /your/project/.claude/hooks && npm install && chmod +x *.sh
+```
+
+**Why This Change?**
+- Simplicity: Users copy `.claude/` to projects (not using marketplace features)
+- Clarity: Single purpose easier to understand
+- Honesty: Matches actual usage pattern
+- Focus: Memory/waypoint is core value
+
+### Rationale
+
+The marketplace structure added unnecessary complexity. Users were copying files directly to projects, not leveraging marketplace features. This release embraces simplicity and focuses on the core value: persistent memory and context management.
+
+---
 
 ## [1.0.0] - 2025-01-16
 

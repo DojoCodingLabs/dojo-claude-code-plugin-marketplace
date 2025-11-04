@@ -39,14 +39,14 @@ cd claude-code-waypoint
 git checkout -b feature/your-feature-name
 
 # Test hooks locally
-cd plugins/waypoint/.claude/hooks && npm install && chmod +x *.sh
+cd .claude/hooks && npm install && chmod +x *.sh
 
 # Make changes
 # ... (see Contributing Sections below)
 
 # Test your changes
 npm run test  # if applicable
-cat plugins/waypoint/.claude/skills/skill-rules.json | jq .  # validate JSON
+cat .claude/skills/skill-rules.json | jq .  # validate JSON
 ```
 
 ## Types of Contributions
