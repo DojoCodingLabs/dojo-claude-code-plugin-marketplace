@@ -5,35 +5,97 @@ argument-hint: Optional - specific context or tasks to focus on (leave empty for
 
 We're approaching context limits. Please update the waypoint plan documentation to ensure seamless continuation after context reset.
 
-## Priority: Update SESSION PROGRESS
+## 🔄 New Workflow: Task-First Updates
 
-This is the **most critical** section for context survival. Update immediately:
+**This command now enforces integrated task tracking**:
+
+1. ✅ **FIRST**: Update `[task-slug]-tasks.md` (mark completed tasks, calculate progress)
+2. ✅ **THEN**: Update `[task-slug]-context.md` SESSION PROGRESS (using task status from step 1)
+3. ✅ **VERIFY**: Ensure both files are synchronized and consistent
+
+**Why this matters**: Tasks.md is the source of truth. Context.md SESSION PROGRESS reflects task status. This prevents:
+- Forgetting to update task checklists
+- Progress mismatches between files
+- Losing track of what's actually done
+- Resuming with stale or incorrect task status
+
+## Priority: Update Tasks First, Then SESSION PROGRESS
+
+**Critical workflow order**: Update `tasks.md` → then use task status to inform `context.md` SESSION PROGRESS.
+
+This ensures consistency between task checklists and progress tracking.
 
 ### For each active task in `plans/active/*/`:
 
+#### Step 1: Review and Update Tasks File
+
+**File**: `[task-slug]-tasks.md`
+
+1. **Read the entire tasks file** and identify completed tasks based on work done this session
+2. **Mark completed tasks** with `[x]`
+3. **Add IN PROGRESS marker** to current task: `- [ ] Task description **(IN PROGRESS)**`
+4. **Calculate progress**: Count completed vs total tasks (e.g., "8/15 tasks = 53%")
+5. **Verify acceptance criteria**: Ensure marked tasks meet their completion criteria
+6. **Add newly discovered tasks** if requirements expanded
+7. **Update task order** if priorities changed
+
+**Example before:**
+```markdown
+### Phase 1: Foundation
+- [x] Set up project structure
+- [ ] Implement authentication
+- [ ] Create database schema
+```
+
+**Example after:**
+```markdown
+### Phase 1: Foundation (2/3 tasks = 67%)
+- [x] Set up project structure
+- [x] Implement authentication **(COMPLETED THIS SESSION)**
+- [ ] Create database schema **(IN PROGRESS)**
+```
+
+#### Step 2: Update Context File SESSION PROGRESS
+
 **File**: `[task-slug]-context.md`
 
-Update the `## SESSION PROGRESS` section with current timestamp:
+Now update the `## SESSION PROGRESS` section **using task status from Step 1**:
 
 ```markdown
 ## SESSION PROGRESS (YYYY-MM-DD HH:MM)
 
-### ✅ COMPLETED
-[List all completed tasks - be specific with file names]
+**Progress**: [X/Y tasks completed = Z%] ← FROM TASKS.MD STEP 1
+
+### ✅ COMPLETED THIS SESSION
+[Copy completed tasks from tasks.md - be specific with file names]
+- Task 1 [x] from tasks.md
+- Task 2 [x] from tasks.md
 
 ### 🟡 IN PROGRESS
-[What you're working on RIGHT NOW with exact file and function/component]
+[Copy current task marked with **(IN PROGRESS)** from tasks.md]
+- Current task details
+- File: [exact file path]
+- Function/Component: [exact name]
 
 ### ⏳ PENDING
-[What's coming next in priority order]
+[Copy upcoming unchecked tasks from tasks.md in priority order]
+- Next task from tasks.md
+- Following task from tasks.md
 
 ### 🚫 BLOCKED (if any)
 [Specific blockers with what's needed to unblock]
+- Cross-reference with any blocked tasks in tasks.md
 
 ### 🎯 NEXT ACTION
-[VERY SPECIFIC next step: file name + function + exact action]
-Example: "Implement refreshToken() function in lib/supabase/auth.ts to handle expired tokens"
+[VERY SPECIFIC next step aligned with current **(IN PROGRESS)** task in tasks.md]
+Example: "Implement refreshToken() function in lib/supabase/auth.ts to handle expired tokens (Task 3 from tasks.md)"
 ```
+
+**Consistency check**: Verify that:
+- ✅ COMPLETED section matches `[x]` tasks in tasks.md
+- 🟡 IN PROGRESS matches the `**(IN PROGRESS)**` task in tasks.md
+- ⏳ PENDING matches remaining `[ ]` tasks in tasks.md
+- Progress percentage is accurate (count tasks in tasks.md)
 
 ## Required Updates
 
@@ -86,14 +148,24 @@ To continue this work:
 8. Expected time: [estimate for next step]
 ```
 
-### 2. Update Task Checklists
+### 2. Verify Task-Context Synchronization
 
-For each `[task-slug]-tasks.md`:
-- Mark completed tasks with `[x]` immediately
-- Add **(IN PROGRESS)** marker to current task
-- Add any newly discovered tasks
-- Update acceptance criteria if changed
-- Reorder priorities if needed
+**After updating both files, verify consistency**:
+
+For each waypoint (`[task-slug]-tasks.md` and `[task-slug]-context.md`):
+
+**Cross-reference check**:
+- [ ] Count of completed tasks matches between files
+- [ ] Current task **(IN PROGRESS)** appears in both files
+- [ ] Progress percentage in context.md matches tasks.md count
+- [ ] NEXT ACTION in context.md aligns with current task in tasks.md
+- [ ] Blocked tasks (if any) are noted in both files
+
+**If inconsistencies found**:
+1. **Tasks.md is source of truth** for task status
+2. Update context.md SESSION PROGRESS to match tasks.md
+3. Ensure file modifications support completed task claims
+4. Document any gaps in acceptance criteria
 
 ### 3. Capture Session-Specific Context
 
@@ -196,24 +268,65 @@ Ensure all files have current timestamps:
 
 ## Verification Checklist
 
-Before finishing, verify:
-- [ ] All SESSION PROGRESS sections updated with current timestamp
-- [ ] NEXT ACTION is very specific (file + function + action)
-- [ ] Completed tasks marked as [x]
+Before finishing, verify **in this order**:
+
+### Phase 1: Tasks File (Source of Truth)
+- [ ] **Read** `[task-slug]-tasks.md` completely
+- [ ] **Identified** all completed tasks from this session
+- [ ] **Marked** completed tasks with `[x]`
+- [ ] **Added** `**(IN PROGRESS)**` marker to current task
+- [ ] **Calculated** progress percentage (X/Y tasks = Z%)
+- [ ] **Verified** acceptance criteria met for completed tasks
+- [ ] **Added** any newly discovered tasks
+- [ ] **Updated** task priorities if needed
+
+### Phase 2: Context File (Derived from Tasks)
+- [ ] **Copied** task status from tasks.md to SESSION PROGRESS
+- [ ] **Updated** SESSION PROGRESS with current timestamp
+- [ ] **Matched** progress percentage from tasks.md
+- [ ] **Aligned** NEXT ACTION with current **(IN PROGRESS)** task
+- [ ] **Listed** completed tasks from tasks.md in ✅ COMPLETED section
+- [ ] **Listed** pending tasks from tasks.md in ⏳ PENDING section
+
+### Phase 3: Consistency Validation
+- [ ] **Verified** completed task count matches between both files
+- [ ] **Verified** current task matches between both files
+- [ ] **Verified** progress percentage is accurate
+- [ ] **Verified** file modifications support completed tasks
+
+### Phase 4: Additional Documentation
 - [ ] Key decisions documented with rationale
 - [ ] Files modified section is complete
 - [ ] Quick resume instructions are current
 - [ ] All timestamps updated
-- [ ] Any blockers clearly described
+- [ ] Any blockers clearly described with unblock requirements
 
 ## After Updating
 
-1. Inform user which files were updated
-2. Show brief summary of current state
-3. Confirm next action is clear
-4. Suggest they can safely continue after context reset
+**Report to user**:
 
-**Priority**: Focus on capturing information that would be hard to rediscover or reconstruct from code alone. The goal is < 1 minute resume time after context reset.
+1. **Files updated**: List both tasks.md and context.md files
+2. **Progress summary**: "Completed X/Y tasks (Z%)" from tasks.md
+3. **Current task**: Show what's marked **(IN PROGRESS)** in tasks.md
+4. **Next action**: Specific step from context.md NEXT ACTION
+5. **Consistency status**: "✅ Tasks and context are synchronized"
+6. **Resume confidence**: "Ready to continue after context reset (< 60 second resume)"
+
+**Example report**:
+```
+Updated waypoint files:
+- plans/active/auth-implementation/auth-implementation-tasks.md
+- plans/active/auth-implementation/auth-implementation-context.md
+
+Progress: 8/15 tasks completed (53%)
+Current task: Implement token refresh in auth.ts **(IN PROGRESS)**
+Next action: Add refreshToken() function to handle expired tokens
+
+✅ Tasks and context are synchronized
+✅ Ready for seamless continuation after context reset
+```
+
+**Priority**: Focus on capturing information that would be hard to rediscover or reconstruct from code alone. The goal is < 60 second resume time after context reset.
 
 ## See Also
 
